@@ -1,0 +1,111 @@
+﻿@model IEnumerable<RawnaqProject.Models.usersaccounts>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layoutMaster.cshtml";
+
+}
+
+<body>
+<h1>Users management</h1>
+<br />
+ 
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pass)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.role)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('/images/back2.png') no-repeat center center fixed;
+                background-size: cover;
+                opacity: 0.6;
+                z-index: -1;
+            }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1d4e89;
+        }
+
+        .table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            font-size: 18px;
+            background-color: rgba(255, 249, 243, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+            .table th, .table td {
+                padding: 15px;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #a2cff7;
+                color: white;
+                font-weight: bold;
+            }
+
+            .table tr:nth-child(even) {
+                background-color: rgba(169, 169, 169, 0.3);
+            }
+
+            .table tr:nth-child(odd) {
+                background-color: white;
+            }
+
+
+    </style>
+
+</body>

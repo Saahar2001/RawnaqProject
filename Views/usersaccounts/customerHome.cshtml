@@ -1,0 +1,94 @@
+﻿@model IEnumerable<RawnaqProject.Models.items>
+
+@{
+    Layout = "~/Views/Shared/layoutCustomer.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+<head>
+    <style>
+    
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('/images/back2.png') no-repeat center center fixed;
+                background-size: cover;
+                opacity: 0.6;
+                z-index: -1; /* Ensure it stays behind the navbar */
+            }
+
+        .i {
+            text-align: center;
+            color: #1d4e89;
+        }
+
+        h3 {
+            text-align: center;}
+
+        .jumbotron{
+            text-align: center;
+            color: #5271ff;
+        }
+        .lead{
+            color: #0cc0df;
+        }
+       
+
+    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <h1 class="i">Welcome @ViewData["Message"]</h1>
+
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Rawnaq, where the essence of the sea meets beauty and wellness.</h1>
+        <p class="lead">Our carefully curated collection is designed to enhance your inner glow and elevate your well-being.
+            <br /> Discover products that promote health, beauty, and serenity, designed with you in mind.
+        </p>
+       
+        
+    </div>
+
+    <h3 class="p-3 mb-2 bg-info text-white">Our Discount Items</h3>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <!-- Card Header: Item ID -->
+                <div class="card-header text-center">
+                    <strong>ID: @item.Id</strong>
+                </div>
+
+                <!-- Card Body: Item Name and Image -->
+                <div class="card-body text-center">
+                    <h5 class="card-title">@item.name</h5>
+                    <img src="~/images/@item.imgfile" class="card-img-top" alt="@item.name" style="max-height: 150px; object-fit: cover;">
+                </div>
+
+                <!-- Card Footer: More Link -->
+                <div class="card-footer text-center">
+                    <a asp-controller="items" asp-action="Details" asp-route-id="@item.Id">More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+</body>
+
+</html>
+

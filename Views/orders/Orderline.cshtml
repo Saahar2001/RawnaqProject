@@ -1,0 +1,107 @@
+﻿@model IEnumerable<RawnaqProject.Models.orderline>
+@{
+    @if ((string)ViewData["Role"] == "admin")
+    {
+        Layout = "~/Views/Shared/layoutMaster.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/layoutCustomer.cshtml";
+    }
+}
+<body>
+    <h1>Order Details</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>  @Html.DisplayNameFor(model => model.itemname) </th>
+                <th>  @Html.DisplayNameFor(model => model.itemquant) </th>
+                <th>  @Html.DisplayNameFor(model => model.itemprice)  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>  @Html.DisplayFor(modelItem => item.itemname) </td>
+                    <td> @Html.DisplayFor(modelItem => item.itemquant) </td>
+                    <td>   @Html.DisplayFor(modelItem => item.itemprice)  </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if ((string)ViewData["Role"] == "customer")
+    {
+        <p> <a asp-action="MyOrder" class="btn btn-info">Back to Orders </a></p>
+    }
+
+</body>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        position: relative;
+        min-height: 100vh; /* Ensure the body takes at least the full height of the page */
+    }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/images/back2.png') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.6;
+            z-index: -1;
+        }
+</style>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: #1d4e89;
+    }
+
+    .table {
+        width: 80%;
+        margin: auto;
+        border-collapse: collapse;
+        font-size: 18px;
+    }
+
+    .header-row {
+        background-color: #a2cff7; /* Different color for the first row (header) */
+        color: #fff;
+        text-align: left;
+    }
+
+    .item-row:nth-child(even) {
+        background-color: rgba(169, 169, 169, 0.3);
+    }
+
+    .item-row:nth-child(odd) {
+        background-color: #fff; /* Default white background for odd rows */
+    }
+
+    th, td {
+        padding: 30px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+    td {
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<RawnaqProject.Models.orders>
+
+@{
+    ViewData["Title"] = "ordersdetail";
+    Layout = "~/Views/Shared/layoutMaster.cshtml";
+
+}
+<body>
+<h1>Orders detail</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>   @Html.DisplayNameFor(model => model.custname)</th>
+            <th>  @Html.DisplayNameFor(model => model.total) </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>   @Html.DisplayFor(modelItem => item.custname) </td>
+                <td> @Html.DisplayFor(modelItem => item.total)</td>
+                <td>  <a asp-action="Orderline" asp-route-orid="@item.Id">View</a> </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-action="purchaseReport" asp-controller="orders" class="btn btn-info">
+        Back to purchase report
+    </a>
+    </div>
+</body>
+<style>
+      body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        position: relative;
+        min-height: 100vh; /* Ensure the body takes at least the full height of the page */
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('/images/back2.png') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.6;
+        z-index: -1;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: #1d4e89;
+    }
+
+
+    .table {
+        width: 80%;
+        margin: auto;
+        border-collapse: collapse;
+        font-size: 18px;
+        background-color: rgba(255, 249, 243, 0.8);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #a2cff7;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: rgba(169, 169, 169, 0.3);
+        }
+
+        .table tr:nth-child(odd) {
+            background-color: white;
+        }
+
+    th, td {
+        padding: 30px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+    td {
+        text-align: center;
+    }
+    .btn{
+        text-align: center;
+    }
+</style>

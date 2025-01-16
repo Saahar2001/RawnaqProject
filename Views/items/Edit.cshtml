@@ -1,0 +1,78 @@
+﻿@model RawnaqProject.Models.items
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>items</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="control-label"></label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="discount" class="control-label"></label>
+                <div class="checkbox">
+                    <label> <input type="radio" asp-for="discount" value="yes" /> Yes</label>
+                </div>
+                <div class="checkbox">
+                    <label> <input type="radio" asp-for="discount" value="no" />No</label>
+                </div>
+                <span asp-validation-for="discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="pubdate" class="control-label"></label>
+                <input asp-for="pubdate" class="form-control" />
+                <span asp-validation-for="pubdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Catagory</label>
+                <select class="form-control" asp-for="category">
+                    <option value="0">Please select</option>
+                    <option value="1">Monthly Box</option>
+                    <option value="2">Happiness Boxes</option>
+                    <option value="3">Design Your Box</option>
+                </select>
+                <span asp-validation-for="category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="quantity" class="control-label"></label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <img src="~/images/@Model.imgfile" height="150" />
+            <div class="form-group">
+                file name:
+                <input type="hidden" asp-for="imgfile" />
+                @Model.imgfile
+                <input type="file" class="form-control" name="file" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

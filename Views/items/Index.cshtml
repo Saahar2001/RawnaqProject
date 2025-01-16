@@ -1,0 +1,167 @@
+﻿@model IEnumerable<RawnaqProject.Models.items>
+
+@{
+    ViewData["Title"] = "Index";
+    @if ((string)ViewData["Role"] == "admin")
+    {
+        Layout = "~/Views/Shared/layoutMaster.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/layoutCustomer.cshtml";
+
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('/images/back2.png') no-repeat center center fixed;
+                background-size: cover;
+                opacity: 0.6;
+                z-index: -1;
+            }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1d4e89;
+        }
+
+        .table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            font-size: 18px;
+            background-color: rgba(255, 249, 243, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+            .table th, .table td {
+                padding: 15px;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #a2cff7;
+                color: white;
+                font-weight: bold;
+            }
+
+            .table tr:nth-child(even) {
+                background-color: rgba(169, 169, 169, 0.3);
+            }
+
+            .table tr:nth-child(odd) {
+                background-color: white;
+            }
+
+        .btn {
+            margin: 5px;
+        }
+
+        .table img {
+            height: 100px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+    </style>
+
+</head>
+<body>
+    @if ((string)ViewData["Role"] == "admin")
+    {
+        <h1>Items Management</h1>
+    }
+    @if ((string)ViewData["Role"] == "customer")
+    {
+        <h1>Items List</h1>
+
+    }
+
+    <p>
+        <!-- Trigger the modal with a button, visible only to admin -->
+        @if ((string)ViewData["Role"] == "admin")
+        {
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#insertModal">Add New Item</button>
+            @await Html.PartialAsync("insertitem", new items())
+        }
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.imgfile)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.price)
+                    </td>
+                    <td>
+                        <img src="~/images/@item.imgfile" height="150" alt="Image" />
+                    </td>
+                    <td>
+
+                        <!-- Always show Detail button -->
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="@("#detailModal-" + @item.Id)">Detail</button>
+                        @await Html.PartialAsync("detailitem", item)
+
+                        <!-- Show Edit and Delete buttons only for admin -->
+                        @if ((string)ViewData["Role"] == "admin")
+                        {
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="@("#editModal-" + @item.Id)">Edit</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="@("#deleteModal-" + @item.Id)">Delete</button>
+                            @await Html.PartialAsync("edititem", item)
+                            @await Html.PartialAsync("deleteitem", item)
+                        }
+
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+﻿@model RawnaqProject.Models.usersaccounts
+
+@{
+    ViewData["Title"] = "addAdmin";
+    Layout = "~/Views/Shared/layoutMaster.cshtml";
+}
+
+
+
+<body>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('/images/back2.png') no-repeat center center fixed;
+                background-size: cover;
+                opacity: 0.6;
+                z-index: -1;
+            }
+
+        h1 {
+            text-align: center;
+            font-size: 32px; /* Reduced font size */
+            font-weight: 500;
+            color: #1d4e89;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        form {
+            position: relative;
+            width: 90%;
+            max-width: 450px; /* Reduced max-width for a smaller form */
+            margin: 10px auto;
+            background: rgba(162, 207, 247, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-group label {
+            font-size: 18px; /* Reduced font size */
+            font-weight: 400;
+            color: #1A3D6D;
+        }
+
+
+        input[type="submit"] {
+            display: block;
+            width: 120px; /* Smaller button */
+            height: 40px;
+            margin: 15px auto;
+            background: rgba(79, 189, 186, 0.9);
+            color: #FFF9F3;
+            font-size: 16px; /* Reduced font size */
+            border: 2px solid #F4D6A0;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px; /* Reduced font size */
+            color: #1A3D6D;
+            margin-top: 10px;
+        }
+    </style>
+
+<div class="row">
+        <div class="col-md-4">
+</div>
+    <div class="col-md-4">
+            <form asp-action="addAdmin" onsubmit="return validateForm()">
+                <h1>Add Admin</h1>
+            <div class="form-group">
+                <label for="name">Name:</Label> 
+                <input id="name" name="name" class="form-control" placeholder="Enter admin name" required /></div>
+            <div class="form-group">
+               <label for="pass">Password:</label>
+                <input name="pass" type="password" id="pass" class="form-control" placeholder="Enter admin password" required></div>
+            <div class="form-group">
+              <label for="confpass">  Confirm Password: </label>
+                <input type="password" id="confpass" class="form-control" placeholder="Enter admin password" required></div>
+
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+            @if(ViewData["Message"] != null){
+                <div class="alert alert-info mt-3">@ViewData["Message"]</div>
+            }
+        </form>
+    </div>
+        <div class="col-md-4">
+        </div>
+</div>
+    <script>
+        function validateForm() {
+            var password = document.getElementById("pass").value;
+            var confirm_password = document.getElementById("confpass").value;
+            if (password != confirm_password) {
+                alert("Passwords do not match!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+  
+
+</body>

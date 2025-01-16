@@ -1,0 +1,117 @@
+﻿@{
+    Layout= null;
+}
+<img class="logo" src="~/images/logo.png" />
+
+<form asp-action="Login">
+    <h2>Login</h2>
+
+    <div class="form-group">
+        <label class="control-label" for="username"> Username</label>
+        <input name="na" id="username" class="form-control" placeholder="Enter your username" required>
+    </div>
+    <div class="form-group">
+        <label for="password" class="control-label">Password</label>
+        <input name="pa" id="password" class="form-control" placeholder="Enter your password" required> <br />
+    </div>
+    <div style="text-align: center;">
+        <input type="checkbox" name="auto" id="auto-login"> <label for="auto-login" class="L"> Auto login </label>
+    </div>
+    <input type="submit" value="Login" class="btn btn-default" />
+    <p style="color:red"> @ViewData["message"]</p>
+
+    <p>Not registerd ? <a asp-action="registration" asp-controller="usersaccounts"> Register Here </a> </p>
+</form>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        position: relative;
+    }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/images/back.png') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+    .logo {
+        display: block;
+        margin: 30px auto 20px; /* Centers logo and adds space around it */
+        width: 200px; /* Adjust logo size as needed */
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 48px;
+        font-weight: 500;
+        color: #1d4e89;
+        margin-top: 10px; /* Reduce space above the title */
+        margin-bottom: 20px; /* Reduce space below the title */
+    }
+
+    form {
+        position: relative;
+        width: 600px; /* Adjust form width if needed */
+        margin: 20px auto; /* Centers the form */
+        background: rgba(162, 207, 247, 0.7);
+        border-radius: 20px;
+        padding: 30px; /* Reduces padding */
+        box-sizing: border-box;
+    }
+
+    .form-group label {
+        font-size: 24px;
+        font-weight: 400;
+        color: #1A3D6D;
+    }
+    .L{
+        color: #1A3D6D;
+    }
+    .form-control {
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        background: rgba(255, 249, 243, 0.8);
+        border: none;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+
+    input[type="checkbox"] {
+        position: relative;
+        margin-right: 10px;
+        transform: scale(1.2);
+        vertical-align: middle;
+    }
+
+    input[type="submit"] {
+        display: block;
+        width: 150px;
+        height: 45px;
+        margin: 20px auto;
+        background: rgba(79, 189, 186, 0.9);
+        color: #FFF9F3;
+        font-size: 18px;
+        border: 2px solid #F4D6A0;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+        font-size: 16px;
+        color: #1A3D6D;
+    }
+</style>

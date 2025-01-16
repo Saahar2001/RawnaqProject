@@ -1,0 +1,186 @@
+﻿@model RawnaqProject.Models.items
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/layoutCustomer.cshtml";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+      
+         .label {
+            font-size: 18px; /* Reduced font size */
+            font-weight: 400;
+            color: #1A3D6D;
+        }
+
+        /* Center the content */
+        .L{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            width: 90%;
+            max-width: 450px; /* Reduced max-width for a smaller form */
+            margin: 10px auto;
+            background: rgba(162, 207, 247, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Table-like appearance */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(0,0,0,0); /* Square background for the table */
+            margin-top: 20px;
+        }
+
+            /* Add a line between each row */
+            .details-table tr {
+                border-bottom: 1px solid #ddd; /* Line between rows */
+            }
+
+            .details-table td {
+                padding: 10px;
+                text-align: left;
+                vertical-align: middle;
+            }
+
+                .details-table td.label {
+                    font-weight: bold;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                }
+
+                /* Style for the "locked" input-like fields (readonly text) */
+                .details-table td.value {
+                    background-color: rgba(0,0,0,0);
+                    padding: 10px;
+
+                }
+
+        /* Style for the "locked" input-like display fields */
+        .locked {
+            display: inline-block;
+            width: 100%;
+            padding: 5px;
+            background-color: #e0e0e0;
+ 
+            text-align: left;
+        }
+
+        /* Style for the radio buttons */
+        .radio-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+            .radio-group label {
+                margin-right: 10px;
+            }
+
+        /* Style the image cell */
+        .image-cell img {
+            max-height: 150px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            min-height: 100vh; /* Ensure the body takes at least the full height of the page */
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('/images/back2.png') no-repeat center center fixed;
+                background-size: cover;
+                opacity: 0.6;
+                z-index: -1;
+            }
+
+        h1 {
+            text-align: center;
+            color: #1d4e89;
+        }
+    </style>
+</head>
+
+
+<body>
+<div class="L">
+    <div>
+        <h1>Item Details</h1>
+        <div>
+     
+            <table class="details-table">
+                <tr>
+                    <td class="label">Name:</td>
+                    <td class="value">
+                        <div class="locked">@Html.DisplayFor(model => model.name)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Type:</td>
+                    <td class="value">
+                        <div class="locked">@Html.DisplayFor(model => model.description)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Price:</td>
+                    <td class="value">
+                        <div class="locked">@Html.DisplayFor(model => model.price)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Discount:</td>
+                    <td class="value">
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="discount" value="yes" disabled @if (Model.discount == "yes")
+                                {
+                                    <text>checked</text>
+                                } /> Yes
+                            </label>
+                            <label>
+                                <input type="radio" name="discount" value="no" disabled @if (Model.discount == "no")
+                                {
+                                    <text>checked</text>
+                                } /> No
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Category:</td>
+                    <td class="value">
+                        <div class="locked">@Html.DisplayFor(model => model.category)</div>
+                    </td>
+                </tr>
+                <tr class="image-cell">
+                    <td class="label"></td>
+                    <td class="value">
+                        <img src="~/images/@Model.imgfile" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>

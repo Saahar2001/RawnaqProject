@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RawnaqProject</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RawnaqProject.styles.css" asp-append-version="true" />
+
+    <style>
+        /* Set the color of the text in the navbar links */
+        .navbar .nav-link {
+            color: #597f96 !important; /* Soft blue text color */
+        }
+
+            /* Change text color of navbar items when hovered */
+            .navbar .nav-link:hover {
+                color: #4a6e7b !important; /* Slightly darker color on hover */
+            }
+
+        /* Make sure the button's text color doesn't change */
+        .navbar .btn {
+            color: white !important; /* Keep button text color white */
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+
+                <!--For the admin NavBar  ( home, Manage Items, Send email, Customer Search, Report Page, dashboard, Add Admin, User Management,Logout button)
+                 o Also include the Logo, Website Title, Logout button)
+                                -->
+
+                <img src='~/images/logo.png' width="150" height="100" class="me-3" />
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <h6 style="font-family:'Times New Roman', Times, serif; font-weight:bolder; color:#1d4e89; text-align:center; margin-top:8px; ">Rawnaq</h6>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="usersaccounts" asp-action="adminHome">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="items" asp-action="Index">Item management</a>
+                        </li>
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="items" asp-action="listItems">List item</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="usersaccounts" asp-action="email">Send email</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="usersaccounts" asp-action="searchall">User search</a>
+                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="usersaccounts" asp-action="Index">User Management</a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="orders" asp-action="purchaseReport">Report page</a>
+                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="usersaccounts" asp-action="addAdmin">Add admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="items" asp-action="dashboard">Dashboard</a>
+                        </li>
+                        </ul>
+                        <!-- Logout button placed at the end -->
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                            <a class="nav-link btn btn-info text-white" asp-area="" asp-controller="usersaccounts" asp-action="Logout" style="background-color: #17a2b8; color: white;">Logout</a>
+                        </li>
+                        </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - RawnaqProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

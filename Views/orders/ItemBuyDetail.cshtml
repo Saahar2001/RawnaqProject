@@ -1,0 +1,217 @@
+﻿@model RawnaqProject.Models.items
+
+@{
+    Layout = "~/Views/Shared/layoutCustomer.cshtml";
+}
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <title></title>
+    <style>
+        .L {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 140vh;
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(162, 207, 247, 0.7);
+            border-radius: 15px;
+            padding-left: 20px;
+            padding-right: 20px;
+            box-sizing: border-box;
+        }
+
+        h1.item-title {
+            margin: 0; /* No external space */
+            padding: 0; /* No internal space */
+            font-size: 2rem;
+            color: #1d4e89;
+            text-align: center;
+        }
+
+
+        h1.item-title {
+            margin: 0; /* No space between Buy and .L */
+            padding: 0;
+            font-size: 2rem;
+            color: #1d4e89;
+            text-align: center;
+        }
+
+
+            .locked {
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            padding: 8px;
+            margin-bottom: 10px;
+            cursor: not-allowed;
+        }
+
+        .discount-radio input {
+            margin-right: 5px;
+        }
+
+        .discount-radio {
+            margin-right: 15px;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            min-height: 100vh; /* Ensure the body takes at least the full height of the page */
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('/images/back2.png') no-repeat center center fixed;
+                background-size: cover;
+                opacity: 0.6;
+                z-index: -1;
+            }
+
+        h1 {
+            text-align: center;
+            color: #1d4e89;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .buy-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+ 
+    <div class="L">
+        <h1 class="item-title">Item details to buy</h1>
+        @if (ViewData["message"] != null)
+        {
+            <p class="error-message">@ViewData["message"]</p>
+        }
+        <dl class="row">
+
+            <dt class="col-sm-2">Name:</dt>
+            <dd class="col-sm-10 locked">
+                @Html.DisplayFor(model => model.name)
+            </dd>
+            <dt class="col-sm-2">Type:</dt>
+            <dd class="col-sm-10 locked">
+                @Html.DisplayFor(model => model.description)
+            </dd>
+            <dt class="col-sm-2">Price:</dt>
+            <dd class="col-sm-10 locked">
+                @Html.DisplayFor(model => model.price)
+            </dd>
+            <dt class="col-sm-2">Discount:</dt>
+            <dd class="col-sm-10 locked">
+                @if (@Model.discount == "yes")
+                {
+                    <label class="discount-radio">
+                        <input type="radio" name="discount" value="yes" checked disabled />
+                        Yes
+                    </label>
+                }
+                else
+                {
+                    <label class="discount-radio">
+                        <input type="radio" name="discount" value="no" checked disabled />
+                        No
+                    </label>
+                }
+            </dd>
+            <dt class="col-sm-2">Category:</dt>
+            <dd class="col-sm-10 locked">
+                @{
+                    var categoryName = Model.category switch
+                    {
+                        1 => "Monthly Box",
+                        2 => "Happiness Box",
+                        3 => "Design Your Box",
+                        _ => "unknown"
+                    };
+                }
+                @categoryName
+            </dd>
+
+            <dt class="col-sm-2"></dt>
+            <dd class="col-sm-10">
+                <img src="~/images/@Model.imgfile" height="150" alt="@Model.name" class="item-image" />
+            </dd>
+        </dl>
+        <form asp-action="cartadd" asp-controller="orders" class="buy-form">
+            <input type="hidden" name="Id" vaLue="@Model.Id" />
+            <input type="hidden" id="stockQty" value="@Model.quantity" />
+
+            <div class="form-group">
+                <label for="quantity" class="control-label" style="font-weight: bold;">Quantity:</label>
+                <input name="quantity" class="form-control" id="qu" onchange="getTotalAndValidate()" />
+            </div>
+
+            <input type="hidden" id="price" name="price" value="" />
+
+            <div class="alert alert-success" id="tot"></div>
+            <p style="color:red;" id="errorMsg"></p>
+
+            <input type="submit" id="buyBtn" value="Add to Cart"  onclick="checkqu()" class="btn btn-primary" />
+        </form>
+    </div>
+    @section scripts {
+        <script>
+            function getTotalAndValidate() {
+                let quantityInput = document.getElementById('qu').value;
+                let price = parseFloat('@Model.price');
+                let availableStock = parseInt(document.getElementById('stockQty').value);
+                let discount = '@Model.discount' === "yes" ? 0.9 : 1;
+                let total = 0;
+                let errorMsg = "";
+                if (quantityInput && !isNaN(quantityInput)) {
+                    let quantity = parseInt(quantityInput);
+                    total = quantity * price * discount;
+                    if (quantity > availableStock) {
+                        errorMsg = "Quantity exceeds available stock.";
+                        document.getElementById("buyBtn").disabled = true;
+                    } else {
+                        document.getElementById("buyBtn").disabled = false;
+                    }
+                } else if (!quantityInput || parseInt(quantityInput) === 0) {
+                    errorMsg = "Please enter a valid quantity.";
+                    document.getElementById("buyBtn").disabled = true;
+                }
+                document.getElementById("price").value = total.toFixed(2);
+                document.getElementById("tot").innerHTML = "You need to pay total =" + total.toFixed(2) + " SR";
+                document.getElementById("errorMsg").innerHTML = errorMsg;
+            }
+           function checkqu(){
+                let quantityInput = document.getElementById('qu').value;
+                if (!quantityInput || parseInt(quantityInput) === 0) {
+                    errorMsg = "Please enter a valid quantity.";
+                    document.getElementById("buyBtn").disabled = true;
+                    document.getElementById("errorMsg").innerHTML = errorMsg;
+                }
+            }
+        </script>
+    }
+</body>
+</html>
